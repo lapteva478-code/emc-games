@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Банк интерактивных игр ЕМЦ</title>
+<style>
+:root{font-family:system-ui,'Segoe UI',Arial,sans-serif;color:#20304c;background:#f4f7fc}*{box-sizing:border-box}body{margin:0}header{background:linear-gradient(125deg,#163d78,#2874b8);color:white;padding:55px 20px;text-align:center}header h1{font-size:clamp(28px,5vw,46px);margin:12px 0}header p{opacity:.92;margin:8px auto;max-width:700px}.wrap{max-width:1100px;margin:auto;padding:30px 18px}h2{font-size:24px}.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0 30px}button{font:inherit;cursor:pointer}.subject{background:white;border:2px solid #dfe7f3;border-radius:16px;padding:20px 10px;font-weight:700;color:#234267;min-height:100px}.subject span{display:block;font-size:30px;margin-bottom:7px}.subject.active{background:#e6f1ff;border-color:#2874b8}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:20px 0}select{border:1px solid #b7c9df;background:white;border-radius:10px;padding:12px;font:inherit;min-width:170px}.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:17px}.game{background:white;border:1px solid #e0e8f1;border-radius:17px;padding:22px;box-shadow:0 5px 20px #173e7010}.game .tag{font-size:13px;color:#47749f;font-weight:700}.game h3{margin:12px 0;font-size:21px}.game p{line-height:1.5;color:#50627c}.status{display:inline-block;margin-top:8px;border-radius:9px;background:#edf1f6;color:#607085;padding:10px 13px;font-weight:700}.play{display:inline-block;margin-top:8px;border-radius:9px;background:#216bb0;color:white;padding:10px 16px;text-decoration:none;font-weight:700}.empty{padding:25px;border:1px dashed #b8c9dd;border-radius:15px;color:#5b6c80;background:white}footer{text-align:center;color:#65758b;padding:30px 15px;border-top:1px solid #e0e7f0;margin-top:30px}@media(max-width:450px){header{padding:36px 15px}.subjects{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div style="font-size:42px">🎮 📚 ✨</div><h1>Банк интерактивных игр ЕМЦ</h1><p>КГУ «Бородинская средняя школа»</p><p>Образовательные игры по предметам естественно-математического цикла · 2026–2027 учебный год</p></header>
+<main class="wrap"><h2>Выберите предмет</h2><div class="subjects" id="subjects"></div><div class="controls"><h2 style="margin:0;flex:1" id="heading">Математика</h2><label for="grade">Класс: </label><select id="grade"><option value="all">Все классы</option></select></div><div class="games" id="games"></div></main>
+<footer>Творческая группа педагогов естественно-математического цикла · 2026–2027</footer>
+<script>
+const subjects=[['Математика','➗'],['Физика','⚛️'],['Химия','🧪'],['Биология','🌿'],['Информатика','💻'],['География','🌍']];
+const games=[
+{subject:'Математика',grade:7,name:'Алгебраический сейф',topic:'Линейные уравнения',description:'Решайте уравнения, проходите уровни сложности и открывайте секретный код сейфа.',url:''},
+{subject:'Математика',grade:7,name:'Формула-шпион',topic:'Формулы сокращённого умножения',description:'Распознавайте формулы и восстанавливайте пропущенные выражения.',url:''},
+{subject:'Математика',grade:7,name:'Графический детектив',topic:'Линейная функция',description:'Подбирайте графики к формулам и находите скрытые математические подсказки.',url:''},
+{subject:'Математика',grade:8,name:'Квадратный код',topic:'Квадратные уравнения',description:'Решайте уравнения, чтобы собрать секретную комбинацию.',url:''},
+{subject:'Математика',grade:8,name:'Ошибка нейросети',topic:'Повторение алгебры',description:'Проверяйте решения, предложенные ИИ, и находите ошибки.',url:''},
+{subject:'Математика',grade:9,name:'Парабола под прикрытием',topic:'Квадратичная функция',description:'Определяйте функции по графикам и их свойствам.',url:''},
+{subject:'Математика',grade:9,name:'Математический Escape Room',topic:'Итоговое повторение',description:'Решайте задачи и открывайте двери математических комнат.',url:''},
+{subject:'Математика',grade:10,name:'Тригонометрическая дуэль',topic:'Тригонометрические уравнения',description:'Проходите раунды задач возрастающей сложности.',url:''},
+{subject:'Математика',grade:11,name:'Интегральный квест',topic:'Первообразная и интеграл',description:'Находите первообразные и вычисляйте интегралы для прохождения квеста.',url:''}
+];
+let selected='Математика';const subjectBox=document.getElementById('subjects'),grade=document.getElementById('grade'),list=document.getElementById('games'),heading=document.getElementById('heading');
+function drawSubjects(){subjectBox.replaceChildren();subjects.forEach(([name,icon])=>{const b=document.createElement('button');b.type='button';b.className='subject'+(selected===name?' active':'');b.setAttribute('aria-pressed',String(selected===name));const s=document.createElement('span');s.textContent=icon;b.append(s,document.createTextNode(name));b.addEventListener('click',()=>{selected=name;grade.value='all';drawSubjects();drawGrades();drawGames()});subjectBox.append(b)})}
+function drawGrades(){const values=[...new Set(games.filter(g=>g.subject===selected).map(g=>g.grade))].sort((a,b)=>a-b);grade.replaceChildren(new Option('Все классы','all'));values.forEach(v=>grade.add(new Option(v+' класс',String(v))))}
+function drawGames(){heading.textContent=selected;list.replaceChildren();const shown=games.filter(g=>g.subject===selected&&(grade.value==='all'||String(g.grade)===grade.value));if(!shown.length){const el=document.createElement('div');el.className='empty';el.textContent='Игры для этого раздела скоро появятся.';list.append(el);return}shown.forEach(g=>{const card=document.createElement('article');card.className='game';const tag=document.createElement('div');tag.className='tag';tag.textContent=g.grade+' класс · '+g.topic;const title=document.createElement('h3');title.textContent=g.name;const desc=document.createElement('p');desc.textContent=g.description;card.append(tag,title,desc);if(g.url){const a=document.createElement('a');a.className='play';a.href=g.url;a.textContent='▶ Играть';card.append(a)}else{const status=document.createElement('span');status.className='status';status.textContent='Скоро появится';card.append(status)}list.append(card)})}
+grade.addEventListener('change',drawGames);drawSubjects();drawGrades();drawGames();
+</script>
+</body></html>
