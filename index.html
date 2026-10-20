@@ -34,6 +34,7 @@ const games=[
 {subject:'Физика',grade:10,name:'Электромагнитный вызов',topic:'Электростатика и постоянный ток',description:'Три этапа: заряды и поле, конденсаторы, электрический ток. 12 вопросов.',url:'electromagnetic-challenge.html'},
 {subject:'Физика',grade:11,name:'Квантовый детектив',topic:'Квантовая и атомная физика',description:'Раскройте три досье: фотоны, фотоэффект и строение атомного ядра. 12 заданий.',url:'quantum-detective.html'},
 {subject:'Физика',grade:11,name:'Волновая лаборатория',topic:'Колебания, волны и оптика',description:'Три лаборатории: колебания, волны и оптика. 12 заданий с объяснениями.',url:'wave-laboratory.html'},
+{subject:'Химия',grade:7,name:'Химический детектив',topic:'Химические элементы, вещества и формулы',description:'Три этапа расследования: символы элементов, состав веществ и химические формулы. 12 заданий.',url:'chemistry-detective.html'},
 ];
 let selected='Математика';const subjectBox=document.getElementById('subjects'),grade=document.getElementById('grade'),list=document.getElementById('games'),heading=document.getElementById('heading');
 function drawSubjects(){subjectBox.replaceChildren();subjects.forEach(([name,icon])=>{const b=document.createElement('button');b.type='button';b.className='subject'+(selected===name?' active':'');b.setAttribute('aria-pressed',String(selected===name));const s=document.createElement('span');s.textContent=icon;b.append(s,document.createTextNode(name));b.addEventListener('click',()=>{selected=name;grade.value='all';drawSubjects();drawGrades();drawGames()});subjectBox.append(b)})}
